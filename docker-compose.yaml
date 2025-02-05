@@ -20,7 +20,7 @@ services:
     volumes:
       - ./mnt:/dittofeed-mnt
     ports:
-      - 3000
+      - 5000
     depends_on:
       - postgres
       - temporal
