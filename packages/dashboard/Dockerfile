@@ -52,6 +52,6 @@ COPY --from=builder /app/packages/dashboard/public ./public
 COPY --from=builder /app/.yarn ./.yarn
 COPY --from=builder /app/*.json /app/yarn.lock /app/.yarnrc.yml ./
 
-EXPOSE 3000
+EXPOSE 5000
 
 CMD ["node", "server.js"]
