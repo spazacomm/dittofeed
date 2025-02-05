@@ -20,7 +20,7 @@ services:
     volumes:
       - ./mnt:/dittofeed-mnt
     ports:
-      - "3000:3000"
+      - 3000
     depends_on:
       - postgres
       - temporal
@@ -38,7 +38,7 @@ services:
     volumes:
       - ./mnt:/dittofeed-mnt
     ports:
-      - "3001:3001"
+      - 3001
     depends_on:
       - postgres
       - clickhouse-server
@@ -71,7 +71,7 @@ services:
     volumes:
       - ./mnt:/dittofeed-mnt
     ports:
-      - "3000:3000"
+      - 3000
     depends_on:
       - postgres
       - temporal
@@ -115,7 +115,7 @@ services:
     networks:
       - dittofeed-network-dev
     ports:
-      - 7233:7233
+      - 7233
     volumes:
       - ./packages/backend-lib/temporal-dynamicconfig:/etc/temporal/config/dynamicconfig
   postgres:
@@ -126,7 +126,7 @@ services:
       POSTGRES_DB: dittofeed
       POSTGRES_USER: postgres
     ports:
-      - "5432:5432"
+      - 5432
     volumes:
       - postgres:/var/lib/postgresql/data
     networks:
@@ -135,10 +135,10 @@ services:
     image: redpandadata/redpanda:v23.1.1
     profiles: ["kafka"]
     ports:
-      - 9092:9092
-      - 18081:18081
-      - 18082:18082
-      - 19644:9644
+      - 9092
+      - 18081
+      - 18082
+      - 9644
     command:
       - redpanda
       - start
@@ -171,9 +171,9 @@ services:
   clickhouse-server:
     image: clickhouse/clickhouse-server:23.8.8.20-alpine
     ports:
-      - "8123:8123"
-      - "9000:9000"
-      - "9009:9009"
+      - 8123
+      - 9000
+      - 9009
     environment:
       <<: *clickhouse-credentials
     volumes:
@@ -189,13 +189,13 @@ services:
     volumes:
       - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
     ports:
-      - 1888:1888 # pprof extension
-      - 8888:8888 # Prometheus metrics exposed by the collector
-      - 8889:8889 # Prometheus exporter metrics
-      - 13133:13133 # health_check extension
-      - 4317:4317 # OTLP gRPC receiver
-      - 4318:4318 # OTLP http receiver
-      - 55679:55679 # zpages extension
+      - 1888 # pprof extension
+      - 8888 # Prometheus metrics exposed by the collector
+      - 8889 # Prometheus exporter metrics
+      - 13133 # health_check extension
+      - 4317 # OTLP gRPC receiver
+      - 4318 # OTLP http receiver
+      - 55679 # zpages extension
     networks:
       - dittofeed-network-dev
   zipkin:
@@ -203,7 +203,7 @@ services:
     profiles: ["otel"]
     container_name: zipkin
     ports:
-      - 9411:9411
+      - 9411
     networks:
       - dittofeed-network-dev
   grafana:
@@ -220,7 +220,7 @@ services:
     image: prom/prometheus
     profiles: ["otel"]
     ports:
-      - "9090:9090"
+      - 9090
     volumes:
       - ./prometheus.yaml:/etc/prometheus/prometheus.yml
       - prometheus-storage:/prometheus
@@ -230,15 +230,15 @@ services:
     profiles: ["smtp"]
     image: mailhog/mailhog
     ports:
-      - "1025:1025" # SMTP server
-      - "8025:8025" # Web interface
+      - 1025 # SMTP server
+      - 8025 # Web interface
   # Note that minio is only used for local development. In production, use any S3-compatible storage.
   blob-storage:
     image: minio/minio
     profiles: ["blob-storage"]
     ports:
-      - "9010:9000"
-      - "9011:9001"
+      - 9000
+      - 9001
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: password
