@@ -29,7 +29,7 @@ services:
         limits:
           memory: ${LITE_CONTAINER_MEM_LIMIT:-1024}m
     ports:
-      - "3000:3000"
+      - 3000
     depends_on:
       - postgres
       - temporal
@@ -83,7 +83,7 @@ services:
     networks:
       - dittofeed-network-lite
     ports:
-      - 7233:7233
+      - 7233
     volumes:
       - ./packages/backend-lib/temporal-dynamicconfig:/etc/temporal/config/dynamicconfig
   temporal-ui:
@@ -101,7 +101,7 @@ services:
     networks:
       - dittofeed-network-lite
     ports:
-      - 8080:8080
+      - 8080
   postgres:
     image: postgres:${POSTGRES_VERSION:-15}
     restart: always
@@ -129,9 +129,9 @@ services:
     environment:
       <<: *clickhouse-credentials
     ports:
-      - "8123:8123"
-      - "9000:9000"
-      - "9009:9009"
+      - 8123
+      - 9000
+      - 9009
     volumes:
       - clickhouse_lib:/var/lib/clickhouse
       - clickhouse_log:/var/log/clickhouse-server
@@ -144,8 +144,7 @@ services:
     logging:
       driver: "local"
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - 9001
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: password
